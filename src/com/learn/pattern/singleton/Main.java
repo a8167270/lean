@@ -1,5 +1,6 @@
 package com.learn.pattern.singleton;
 
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -11,14 +12,18 @@ import java.lang.reflect.InvocationTargetException;
  **/
 public class Main {
 	public static void main(String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException {
-		Class<?> clazz = LazySingleton.class;
-		Constructor[] cs  = clazz.getDeclaredConstructors();
+		Class<?> clazz = InnerClassSingleton.class;
+		try {
+			Constructor cs  = clazz.getDeclaredConstructor(null);
+			cs.setAccessible(true);
 
-		for (Constructor c : cs) {
-			//用反射强制访问
-			c.setAccessible(true);
-			Object o = c.newInstance();
+			Object o1 = cs.newInstance();
+			Object o2 = cs.newInstance();
+
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
 		}
+
 
 	}
 }
